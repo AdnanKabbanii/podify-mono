@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  firstName     String?
+  lastName      String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // User settings
+  settings      UserSettings?
+  
+  // User's content
+  transcripts   Transcript[]
+  podcasts      Podcast[]
+}
+
+model UserSettings {
+  id            String    @id @default(cuid())
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Voice preferences
+  defaultVoices String    // Comma-separated list of voice IDs
+  theme         String    @default("dark")
+  
+  // Processing preferences
+  maxChunkSize  Int       @default(25000)
+  
+  updatedAt     DateTime  @updatedAt
+}
+
+model Transcript {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // File metadata
+  filename      String
+  fileSize      Int
+  mimeType      String
+  storageKey    String?   // S3 or storage service key
+  content       String?   // Original transcript content
+  
+  // Processing metadata
+  status        TranscriptStatus @default(UPLOADED)
+  tokenCount    Int?
+  chunkCount    Int?
+  
+  // Generated podcast (if any)
+  podcast       Podcast?
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Podcast {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Source transcript (optional)
+  transcriptId  String?   @unique
+  transcript    Transcript? @relation(fields: [transcriptId], references: [id], onDelete: SetNull)
+  
+  // Podcast metadata
+  title         String
+  duration      Int?      // Duration in seconds
+  storageKey    String?   // S3 or storage service key
+  fileSize      Int?
+  content       String    // Processed podcast transcript (required)
+  
+
+  voiceConfig   String?   // JSON string for voice assignments and settings
+  
+
+  mediaFiles    PodcastMedia[]
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+enum TranscriptStatus {
+  UPLOADED
+  PROCESSING
+  PROCESSED
+  FAILED
+}
+
+
+model PodcastMedia {
+  id            String    @id @default(cuid())
+  podcastId     String
+  podcast       Podcast   @relation(fields: [podcastId], references: [id], onDelete: Cascade)
+  
+  filename      String
+  fileSize      Int
+  mimeType      String    @default("audio/mpeg")
+  storageKey    String?
+  duration      Int?      
+  speakerId     String?   
+  segmentText   String?   
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}

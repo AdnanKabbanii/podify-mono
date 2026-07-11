@@ -1,0 +1,122 @@
+### Health Check
+GET http://localhost:3000/api/health
+
+### Register User
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123",
+  "name": "Test User"
+}
+
+### Login User
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### Get Current User
+GET http://localhost:3000/api/auth/me
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### Update User
+PUT http://localhost:3000/api/auth/me
+Authorization: Bearer YOUR_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "name": "Updated Name"
+}
+
+### Update User Settings
+PUT http://localhost:3000/api/auth/me/settings
+Authorization: Bearer YOUR_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "theme": "dark",
+  "defaultVoices": "alloy,echo,fable,onyx,nova"
+}
+
+### Create Transcript
+POST http://localhost:3000/api/transcripts
+Authorization: Bearer YOUR_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "title": "Test Transcript",
+  "content": "This is a test transcript content. It will be processed into a podcast conversation.",
+  "fileName": "test-transcript.txt"
+}
+
+### Get All Transcripts
+GET http://localhost:3000/api/transcripts
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### Get Transcript by ID
+GET http://localhost:3000/api/transcripts/TRANSCRIPT_ID_HERE
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### Process Transcript
+POST http://localhost:3000/api/transcripts/TRANSCRIPT_ID_HERE/process
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### Update Transcript
+PUT http://localhost:3000/api/transcripts/TRANSCRIPT_ID_HERE
+Authorization: Bearer YOUR_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "title": "Updated Transcript Title",
+  "content": "Updated transcript content."
+}
+
+### Delete Transcript
+DELETE http://localhost:3000/api/transcripts/TRANSCRIPT_ID_HERE
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### Create Podcast
+POST http://localhost:3000/api/podcasts
+Authorization: Bearer YOUR_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "title": "Test Podcast",
+  "content": "This is a test podcast content.",
+  "transcriptId": "TRANSCRIPT_ID_HERE",
+  "voiceConfig": {
+    "host": "alloy",
+    "guest": "echo"
+  }
+}
+
+### Get All Podcasts
+GET http://localhost:3000/api/podcasts
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### Get Podcast by ID
+GET http://localhost:3000/api/podcasts/PODCAST_ID_HERE
+Authorization: Bearer YOUR_TOKEN_HERE
+
+### Update Podcast
+PUT http://localhost:3000/api/podcasts/PODCAST_ID_HERE
+Authorization: Bearer YOUR_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "title": "Updated Podcast Title",
+  "content": "Updated podcast content.",
+  "voiceConfig": {
+    "host": "nova",
+    "guest": "fable"
+  }
+}
+
+### Delete Podcast
+DELETE http://localhost:3000/api/podcasts/PODCAST_ID_HERE
+Authorization: Bearer YOUR_TOKEN_HERE 

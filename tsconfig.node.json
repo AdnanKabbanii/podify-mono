@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+
+    /* Bundler mode */
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["vite.config.ts", "src/**/*.ts"]
+}
