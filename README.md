@@ -1,7 +1,6 @@
 Podify
 
-This is one of my older projects. I built it to solve a simple problem: long articles and written content are hard to consume on the go, but they often have great ideas buried inside them.
-
+Built it to solve a simple problem: long articles and written content are hard to consume on the go, but they often have great ideas buried inside them.
 Podify takes large articles, blog posts, and text transcripts and turns them into human sounding podcast style conversations. Instead of reading a 10,000 word piece, you upload the text, the app rewrites it into natural dialogue between speakers, assigns voices, and generates audio you can listen to like a real podcast.
 
 It helps writers, educators, and anyone with long form content repurpose their work into something more entertaining and easier to follow. You get multiple speakers, back and forth conversation, and audio output without recording yourself or hiring voice actors.
@@ -70,6 +69,8 @@ Project structure
 - src/api, src/services, src/middleware: TypeScript API modules
 - server.js: main Express backend
 - prisma: database schema and migrations
+
+Project history: Originally developed as a private personal project and released publicly in July 2026 after removing private configuration and sensitive data. The public repository uses a cleaned, squashed history.
 
 License
 
